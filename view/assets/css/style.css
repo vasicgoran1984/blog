@@ -1,0 +1,739 @@
+body {
+    background: #fff;
+}
+
+.top-container {
+    background: whitesmoke;
+    width: 1280px;
+    height: 40px;
+    margin: 0 auto;
+    padding: 0 auto;
+}
+
+.top_container_content {
+    width: auto;
+    float: left;
+}
+
+.top_container_content a:hover {
+    background: darkgray;
+}
+
+.top-container .top-container-registracija {
+    background: #444;
+}
+
+.top-container .top-container-login {
+    background: #444;
+    float: left;
+}
+
+.top-container a {
+    margin: 0 auto;
+    width: 200px;
+    float: left;
+    height: 40px;
+    background: gray;
+    color: #fff;
+    text-align: center;
+    line-height: 38px;
+    text-decoration: none;
+}
+
+/*BLOG WRAPPER*/
+.blog-wrapper {
+    margin: 0 auto;
+    padding: 0 auto;
+    margin-top: 40px;
+    background: lightgray;
+    width: 1280px;
+    height: auto;
+    float: left;
+    padding-bottom: 40px;
+    margin-bottom: 40px;
+}
+
+/*BLOG SEARCH*/
+
+.blog-wrapper .blog-search {
+    margin: 0 auto;
+    padding-top: 20px;
+    background: lightgray;
+    height: 70px;
+    float: center;
+    width: auto;
+}
+
+.blog-wrapper .blog-search form.pretraga {
+    margin: 0 auto;
+    width: 58%;
+    height: 42px;
+    float: center;
+}
+
+form.pretraga input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid grey;
+  float: left;
+  width: 130px;
+  background: #f1f1f1;
+}
+
+form.pretraga button {
+  float: left;
+  width: 10%;
+  padding: 10px;
+  background: #2196F3;
+  color: white;
+  font-size: 17px;
+  border: 1px solid grey;
+  border-left: none;
+  cursor: pointer;
+}
+
+form.pretraga button:hover {
+  background: #0b7dda;
+}
+
+form.pretraga::after {
+  content: "";
+  clear: both;
+  display: table;
+}
+
+.blog-container {
+    margin: 0 auto;
+    margin-left: 10px;
+    margin-top: 10px;
+    width: 307px;
+    height: 490px;
+    float: left;
+    background: #f2f2f2;   
+}
+
+.blog-image {
+    border:1px solid gray;
+    float: left;
+    margin: 3px;
+    padding: 3px;
+    width: 293px;
+    max-width:100%;
+    max-height:100%;
+    height: auto;
+}
+
+img {
+    width:inherit;
+}
+
+.blog-container .blog-title h4 {
+    margin: 0 auto;
+    color: #333;
+    margin-left: 5px;
+}
+
+.blog-container .blog-text h4 {
+    margin: 0 auto;
+    margin-top: 10px;
+    color: #555;
+    font-size: 12px;
+    margin-left: 5px;
+}
+
+.blog-container .blog-autor h5 {
+    margin: 0 auto;
+    margin-top: 10px;
+    color: #555;
+    font-size: 11px;
+    margin-left: 5px;
+}
+
+.blog-container .blog-link-komentar {
+    margin: 0 auto;
+    margin-top: 10px;
+}
+
+.blog-container .blog-link-komentar a {
+    margin: 0 auto;
+    margin-top: 10px;
+    color: #555;
+    font-size: 11px;
+    margin-left: 5px;
+    background: gray;
+    border: 1px solid #999;
+    color: #fff;
+    padding: 2px;
+    text-decoration: none;
+}
+
+/*LOGIN*/
+
+form.prijava-korisnika {
+    width: 30%;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 10px 10px 10px 10px;
+    background: lightgray;
+}
+
+form.prijava-korisnika hr {
+    color: #fff;
+}
+
+form.prijava-korisnika input {
+    width: 79%;
+    margin-left: 10%;
+    border: none;
+    height: 25px;
+    text-align: center;
+}
+
+form.prijava-korisnika label {
+    float: left;
+    margin-left: 39px;
+}
+
+form.prijava-korisnika .prijava-btn {
+    margin: 30px auto;
+    margin-left: 10%;
+    margin-right: 10%;
+    background: #222;
+    width: 80%;
+    height: 45px;
+    color: #fff;
+    border: none;
+}
+
+/*REGISTRACIJA*/
+
+form.registracija-korisnika {
+    width: 70%;
+    margin: 30px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 10px 10px 10px 10px;
+    background: lightgray;
+}
+
+form.registracija-korisnika .registracija-container-1 {
+    margin: 0 auto;
+    width: 50%;
+    float: left;
+}
+
+form.registracija-korisnika .registracija-container-1 label{
+    margin: 0 auto;
+    margin-left: 93px;
+    float: left;
+}
+
+form.registracija-korisnika .registracija-container-1 input[type='text']{
+    margin: 0 auto;
+    margin-left: 93px;
+}
+
+form.registracija-korisnika .registracija-container-2 {
+    margin: 0 auto;
+    width: 50%;
+    float: left;
+}
+
+form.registracija-korisnika .registracija-container-2 label{
+    margin: 0 auto;
+    margin-left: 93px;
+    float: left;
+}
+
+form.registracija-korisnika .registracija-container-2 input[type='text'], .registracija-container-2 input[type='password']{
+    margin: 0 auto;
+    margin-left: 93px;
+}
+
+form.registracija-korisnika hr {
+    color: #fff;
+}
+
+form.registracija-korisnika input {
+    width: 59%;
+    margin-left: 10%;
+    border: none;
+    height: 25px;
+    text-align: center;
+}
+
+form.registracija-korisnika .registracija-btn {
+    margin: 30px auto;
+    margin-left: 10%;
+    margin-right: 10%;
+    background: #222;
+    width: 80%;
+    height: 45px;
+    color: #fff;
+    border: none;
+}
+
+/*KOMENTAR*/
+
+.pozitivan_utisak {
+    margin:4px;
+    background-color:#EFEFEF;
+    border-radius:4px;
+    border:1px solid #D0D0D0;
+    overflow:auto;
+    float:left;
+}
+
+.pozitivan_utisak:hover {
+    background:red;
+}
+
+.pozitivan_utisak label {
+    float:left;
+    width:120px;
+}
+
+.pozitivan_utisak label span {
+    text-align:center;
+    padding:3px 0px;
+    display:block;
+}
+
+.pozitivan_utisak label input {
+    position:absolute;
+    top:-20px;
+}
+
+.pozitivan_utisak input:checked + span {
+    background-color: blue;
+    color:#fff;
+}
+/**/
+.negativan_utisak {
+    margin:4px;
+    background-color:#EFEFEF;
+    border-radius:4px;
+    border:1px solid #D0D0D0;
+    overflow:auto;
+    float:left;
+}
+
+.negativan_utisak:hover {
+    background:red;
+}
+
+.negativan_utisak label {
+    float:left;
+    width:120px;
+}
+
+.negativan_utisak label span {
+    text-align:center;
+    padding:3px 0px;
+    display:block;
+}
+
+.negativan_utisak label input {
+    position:absolute;
+    top:-20px;
+}
+
+.negativan_utisak input:checked + span {
+    background-color: blue;
+    color:#fff;
+}
+
+/*CLANAK WRAPPER*/
+
+.clanak_container {
+    margin: 40px auto;
+    width: 1280px;
+    height: auto;
+    float: left;
+    background: gray;
+}
+
+.clanak_wrapper {
+    width: 100%;
+    margin: 0 auto;
+    height: auto;
+    
+}
+
+.clanak_wrapper_left {
+    margin: 0 auto;
+    float: left;
+    background: #f2f2f2;
+    width: 100%;
+    background: gray;
+    height: auto;
+}
+
+.clanak_wrapper_left .naslov_clanka {
+    margin: 0 auto;
+    margin-left: 20px;
+    
+    width: 800px;
+    
+}
+
+.clanak_wrapper_left .naslov_clanka h4 {
+    margin: 0 auto;
+    margin-left: 20px;
+    color: #333;
+    margin-left: 5px;
+    font-size: 28px;
+    
+}
+
+.clanak_wrapper_left .slika_clanka {
+    margin: 20px auto;
+    margin-left: 20px;
+    float: left;
+    width: 200px;
+}
+
+.clanak_wrapper_left .kratki_tekst_datum {
+    margin: 20px auto;
+    margin-left: 40px;
+    width: 20%;
+    height: 210px;
+    float: left;
+    background: lightgray;
+    padding-left: 10px;
+}
+
+.clanak_wrapper_left .kratki_tekst_clanka {
+    margin: 20px auto;
+    width: 240px;
+    padding: 4px;
+    height: auto;
+    float: left;
+    background: #fff;
+}
+
+.clanak_wrapper_left .kratki_tekst_clanka span {
+    margin: 0 auto;
+    color: #333;
+    font-size: 18px;
+    float: left;
+}
+
+.clanak_wrapper_left .dugacki_tekst_clanka span {
+    margin: 0 auto;
+    font-weight: normal;
+    line-height: 22px;
+    font-size: 14px;
+    margin: 10px;
+    float: left;
+}
+
+.clanak_wrapper_left .datum_objave_clanka {
+    margin: -15px auto;
+    width: auto;
+    padding: 4px;
+    height: auto;
+    float: left;
+    
+}
+
+.clanak_wrapper_left .datum_objave_clanka span {
+    margin: 0 auto;
+    color: #333;
+    font-size: 12px;
+    float: left;
+}
+
+.clanak_wrapper_left .pozitivan_negativan_utisak {
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    float: left;
+}
+
+.clanak_wrapper_left .pozitivan_negativan_utisak span.ostavi_utisak {
+    margin: 20px auto;
+    font-size: 16px;
+    float: left;
+    color: #333;
+    margin-left: 5px;
+}
+
+.clanak_wrapper_left .utisak_na_clanak {
+    margin: 10px auto;
+    width: 55px;
+    height: 28px;
+    margin-left: 15px;
+    float: left;
+}
+
+.clanak_wrapper_left .ukupno_utisaka {
+    margin: 10px auto;
+    width: auto;
+    height: 60px;
+    float: left;
+}
+
+.clanak_wrapper_left .ukupno_utisaka {
+    margin: 10px auto;
+    font-size: 14px;
+    color: #333;
+    margin-left: 5px;
+}
+
+.clanak_wrapper_left .dugacki_tekst_clanka {
+    margin: 20px auto;
+    width: 680px;
+    padding: 4px;
+    height: 200px;
+    float: left;
+    margin-left: 40px;
+    background: #fff;
+}
+
+.clanak_wrapper_left .dugacki_tekst_clanka h4 {
+    font-size: 14px;
+    padding-left: 5px;
+    color: #555;
+}
+
+.pogledaj_sve_clanke {
+    float: left;
+    color: #fff;
+}
+
+.ukupno_utisaka a {
+    margin: 10px auto;
+    float: left;
+    background: gray;
+    text-decoration: none;
+    padding: 2px;
+    width: 140px;
+    color: #fff;
+}
+
+.komentari_clanka {
+    background: lightgray;
+    margin: 0 auto;
+    border: 1px solid #444;
+    width: 1270px;
+    height: auto;
+    float: left;
+    padding: 5px;
+    border-radius: 4px 4px 4px 4px;
+}
+
+.komentari_clanka span.kor_datum {
+    font-style: italic;
+    font-weight: bold;
+    font-size: 12px;
+}
+
+.komentari_clanka span.komentari_clanka_span {
+    font-style: italic;
+    font-weight: normal;
+    font-size: 16px;
+    
+}
+
+.tabela_sa_clancima {
+    margin-top: 40px;
+    margin-left: 20px;
+    width: 600px;
+}
+
+.dodaj_izmijeni_clanak {
+    width: 100%;
+    height: auto;
+    float: left;
+    background: #f1f1f1;
+}
+
+.dodaj_izmijeni_clanak .container {
+    width: 1280px;
+    height: auto;
+    float: left;
+    background: #f1f1f1;
+    
+}
+
+.komentar_wrapper {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+    float: left;
+    background: lightgray;
+    padding-bottom: 60px;
+}
+
+.komentari_greske {
+    color: red;
+}
+
+.registracija-korisnika-hr {
+    color: red;
+}
+
+.dugacki_tekst_clanka {
+    width: 50%;
+    background: lightgray;
+}
+
+.reakcije_na_komentar {
+    margin: 20px auto;
+    
+}
+
+.komentari_container {
+    width: 100%;
+    background: blue;
+    margin: 0 auto;
+    float: left;
+}
+
+.fa {
+  color: white;
+  line-height: 16px;
+  border-radius: 4px;
+}
+.fa-plus {
+  padding-top: 2px;
+  padding-right: 2px;
+  padding-left: 2px;
+  background-color: green;
+  position: relative;
+  z-index: 999;
+  cursor: pointer;
+  
+}
+
+.fa-minus {
+  padding-top: 2px;
+  padding-right: 2px;
+  padding-left: 2px;
+  background-color: red;
+}
+
+.checkbox-plus-clanak-utisak {
+  position: relative;
+  display: none;
+  
+}
+
+.fa-minus {
+  padding-top: 2px;
+  padding-right: 2px;
+  padding-left: 2px;
+  background-color: red;
+  position: relative;
+  z-index: 999;
+  cursor: pointer;
+}
+
+.checkbox-minus-clanak-utisak {
+  position: relative;
+  display: none;
+  }
+
+/*checkbox komentar*/
+.checkbox-plus-komentar-utisak {
+  position: relative;
+  display: none;
+}
+.checkbox-minus-komentar-utisak {
+  position: relative;
+  display: none;
+}
+
+/*paginacija*/
+.pagination_pages {
+    width: 1280px;
+    margin: 0 auto;
+}
+
+.pagination_index {
+  margin-top: 20px;
+  display: inline-block;
+  width: 50%;
+  margin: 10px auto;
+  margin-left: 30%;
+}
+
+.pagination {
+  margin-top: 20px;
+  display: inline-block;
+  width: 50%;
+  margin: 0 auto;
+  
+  margin-left: 38%;
+}
+
+.pagination a, .pagination_index a {
+  color: black;
+  float: left;
+  padding: 8px 16px;
+  text-decoration: none;
+  transition: background-color .3s;
+  border: 1px solid #ddd;
+  margin: 0 4px;
+}
+
+.pagination a.active, .pagination_index a.active {
+  background-color: #2196F3;
+  color: white;
+  border: 1px solid #4CAF50;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}
+
+.isDisabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
+  text-decoration: none;
+}
+
+/*Promijeni password button */
+.promijeni_password {
+    background-color: lightgray;
+    border: none;
+    font-size: 14px;
+    cursor: pointer;
+    margin-left: 10%;
+    margin-right: 10%;
+    width: 80%;
+    height: 45px;
+    color: #000;
+    font-family: Arial;
+    text-decoration: none;  
+    display: block;
+    line-height: 42px;
+    text-align: center;
+}
+
+.promijeni_password_hr {
+    margin-top: 40px;
+}
+
+.prvi_omotac {
+    margin: 20px auto;
+    margin-left: 10px;
+    width: 1280px;
+    background: #f1f1f1;
+}
+
+.novi_clanak {
+    float: left;
+    margin-top: 20px;
+}
+
+.novi_clanak a {
+    background: gray;
+    padding: 5px;
+    text-decoration: none;
+    color: #fff;
+}
+
