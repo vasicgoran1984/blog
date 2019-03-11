@@ -51,7 +51,16 @@
             $upit = $konekcija->query("SELECT * FROM clanci WHERE id = '".$clanak_id."' ");
             return $upit->fetch_assoc();
         }
-                
+         
+        /*
+         * Prikazi clanak po slug-u
+         */
+        public function prikaziClanakPoSlug($url){
+            global $konekcija;
+            $upit = $konekcija->query("SELECT * FROM clanci WHERE slug LIKE '%$url%' ");
+            return $upit->fetch_assoc();
+        }
+        
         /*
          * Prikazi sve clanke drugih clanova
          */
@@ -76,7 +85,7 @@
             
             $upit_brojac = "SELECT COUNT(*) ";
             $upit_podaci = "SELECT clanci.id AS clanak_id, naslovna_slika,
-                            naslov_clanka, dugacki_tekst, ime, prezime ";
+                            naslov_clanka, dugacki_tekst, ime, prezime, slug ";
             
             $upit = "FROM clanci
                      LEFT JOIN korisnici

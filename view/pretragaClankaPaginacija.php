@@ -47,7 +47,7 @@
                         <h5>Autor: <?php echo htmlspecialchars($jedanClanak['ime'] . ' ' . $jedanClanak['prezime']); ?> </h5>
                     </div>
                     <div class="blog-link-komentar">
-                        <a href="index.php?controller=clanak&operation=procitajKomentarisiClanak&clanak_id=<?php echo $jedanClanak['clanak_id']; ?>">Procitaj Vise</a>
+                        <a href="clanak/<?php echo $jedanClanak['slug']; ?>">Procitaj Vise</a>
                     </div>
                 </div>
             <?php endforeach; ?>

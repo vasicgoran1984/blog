@@ -28,7 +28,7 @@
                         </div>
                     <?php endif; ?>
 
-                    <input type="hidden" placeholder="Kratki Tekst" name="clanak_id" value="<?php echo (isset($rezultat['id']) ? $rezultat['id'] : '' );?>" >
+                    <input type="hidden" name="clanak_id" value="<?php echo (isset($rezultat['id']) ? $rezultat['id'] : '' );?>" >
 
                     Izaberite sliku:
                     <input type="file" name="naslovna_slika" id="naslovna_slika_clanka">
@@ -36,17 +36,17 @@
 
                     <input type="checkbox" name="objavljen" <?php echo (isset($rezultat['objavljen']) && ($rezultat['objavljen'] == 1 ) ? "checked" : "" ); ?> value="<?php echo (isset($rezultat['objavljen']) ? $rezultat['objavljen'] : '' ); ?>">Objavi Clanak<br/><br/>
                     <br/><br/>
-
+                    
                     <label for="naslov clanka"><b>Naslov Clanka:</b></label><br/>
-                    <input type="text" placeholder="Naslov Clanka" name="naslov_clanka" value="<?php echo (  isset($rezultat['naslov_clanka']) && (!empty($rezultat['naslov_clanka'])) ?  $rezultat['naslov_clanka'] : '' );?>" >
+                    <input type="text" placeholder="Naslov Clanka" name="naslov_clanka" value="<?php  echo (isset($rezultat['naslov_clanka']) ? $rezultat['naslov_clanka'] : ''); ?>"required>
                     <br/><br/>
-
+                    
                     <label for="kratki tekst"><b>Kratki Tekst:</b></label><br/>
-                    <input type="text" placeholder="Kratki Tekst" name="kratki_tekst" value="<?php echo (isset($rezultat['kratki_tekst']) ? $rezultat['kratki_tekst'] : '' );?>" >
+                    <input type="text" placeholder="Kratki Tekst" name="kratki_tekst" value="<?php  echo (isset($rezultat['kratki_tekst']) ? $rezultat['kratki_tekst'] : ''); ?>"required>
                     <br/><br/>
 
                     <label for="opis clanka"><b>Dugacki Tekst:</b></label><br/>
-                    <textarea rows="8" cols="80" placeholder="Tekst..." name="dugacki_tekst"><?php echo (isset($rezultat['dugacki_tekst']) ? $rezultat['dugacki_tekst'] : '' );?></textarea> <br/>
+                    <textarea rows="8" cols="80" placeholder="Tekst..." name="dugacki_tekst" required><?php echo (isset($rezultat['dugacki_tekst']) ? $rezultat['dugacki_tekst'] : '');?></textarea> <br/>
                     <br/>
 
                     <label for="kljucne rijeci"><b>Kljucne Rijeci</b></label><br/>

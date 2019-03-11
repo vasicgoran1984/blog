@@ -22,134 +22,107 @@
          * Kreiraj Novi Clanak
          */
         public function dodajIzmijeniClanak() {
+            global $konekcija;
             
             if (isset($_SESSION['korisnik'])) {
-                global $konekcija;
-            
+                $korisnik_id = $_SESSION['korisnik'][0];
+
                 if (isset($_GET['clanak_id'])) {
-
-                    $utisakClanka = new utisakClankaModel($konekcija);
                     $clanak       = new ClanakModel($konekcija);
-
                     $rezultat = $clanak->prikaziClanakPoIdu($_GET['clanak_id']);
-                    $kojiUtisakPostoji = $utisakClanka->kojiUtisakPostoji($_SESSION['korisnik'][0], $_GET['clanak_id']);
-
                     include BASE_PATH . '/view/dodajIzmijeniClanak.php';
-                } else {
-                    if (isset($_POST['novi_clanak'])) {
-                        $greske         = array();
-                        $naslovna_slika = '';
-                        $zadnji_unos    = '';
-                        $file_tmp       = '';
+                } else if (!isset($_POST['novi_clanak'])) {
+                    include BASE_PATH . '/view/dodajIzmijeniClanak.php';
+                }
+   
+                if (isset($_POST['novi_clanak'])) {
+                   
+                   if (isset($_POST['clanak_id'])) {
+                       $clanak_id = $_POST['clanak_id'];
+                   }
+                   
+                    $clanak = new ClanakModel($konekcija);
+                    $greske = array();
 
-                        if (isset($_POST['naslov_clanka']) && empty($_POST['naslov_clanka'])) {
-                            $greske[] = "Molimo da unesete naslov clanka.";
+                    if (isset($_POST['naslov_clanka'])) {
+                        $naslov_clanka = $_POST['naslov_clanka'];
+                    }
+                    if (isset($_POST['kratki_tekst'])) {
+                        $kratki_tekst = $_POST['kratki_tekst'];
+                    }
+                    if (isset($_POST['dugacki_tekst'])) {
+                        $dugacki_tekst = $_POST['dugacki_tekst'];
+                    }
+                    if (isset($_POST['kljucne_rijeci'])) {
+                        $kljucne_rijeci = str_replace(";", " ", $_POST['kljucne_rijeci']);
+                    }
+                    
+                    $slug = trim(strtolower(str_replace(" ", "-", $_POST['naslov_clanka'])), '-');
+                    $objavljen = (!isset($_POST['objavljen']) ? 0 : 1 );
+                    $datum_objave_clanka = date("Y-m-d H:i:s");
+
+                    if (empty($naslov_clanka)) {
+                        $greske[] = "Molimo da unesete naslov clanka.";
+                    }
+                    if (empty($kratki_tekst)) {
+                        $greske[] = "Molimo da unesete kratki tekst.";
+                    }
+                    if (empty($dugacki_tekst)) {
+                        $greske[] = "Molimo da unesete opis clanka.";
+                    }
+                    if (empty($kljucne_rijeci)) {
+                        $greske[] = "Molimo da unesete kljucne rijeci.";
+                    }
+                    
+                    if (file_exists($_FILES['naslovna_slika']['tmp_name']) && is_uploaded_file($_FILES['naslovna_slika']['tmp_name'])) {
+                        $format_slike    = array("jpeg","jpg","png");
+                        $file_tmp        = $_FILES['naslovna_slika']['tmp_name'];
+                        $naslovna_slika  = $clanak_id . ".png";
+                        $naziv_extenzija = explode('.',$_FILES['naslovna_slika']['name']);
+                        $extenzija       = strtolower($naziv_extenzija[1]);
+
+                        if (in_array($extenzija, $format_slike) === false) {
+                            $greske[] = "Format nije dozvoljen. Koristite formate JPEG, JPG ili PNG.";
                         }
-                        if (isset($_POST['kratki_tekst']) && empty($_POST['kratki_tekst'])) {
-                            $greske[] = "Molimo da unesete kratki tekst.";
-                        }
-                        if (isset($_POST['dugacki_tekst']) && empty($_POST['dugacki_tekst'])) {
-                            $greske[] = "Molimo da unesete opis clanka.";
-                        }
-                        if (isset($_POST['kljucne_rijeci']) && empty($_POST['kljucne_rijeci'])) {
-                            $greske[] = "Molimo da unesete kljucne rijeci.";
-                        }
-                        if(count($greske) > 0) {
-                            $clanak       = new ClanakModel($konekcija);
-                            $rezultat = $clanak->prikaziClanakPoIdu($_POST['clanak_id']);
-
-                            include BASE_PATH . '/view/dodajIzmijeniClanak.php';
-
-                        } else {
-                            $korisnik_id    = $_SESSION['korisnik'][0];
-                            $naslov_clanka  = $_POST['naslov_clanka'];
-                            $kratki_tekst   = $_POST['kratki_tekst'];
-                            $dugacki_tekst  = $_POST['dugacki_tekst'];
-                            $kljucne_rijeci = str_replace(";", " ", $_POST['kljucne_rijeci']);
-
-                            if (isset($_POST['clanak_id']) && ! empty($_POST['clanak_id'])) {
-                                $slug = strtolower(str_replace(" ", "-", $naslov_clanka));
-                                $slug = trim(strtolower(str_replace(" ", "-", $naslov_clanka)), '-');
-                            } else {
-                                $slug = trim(strtolower(str_replace(" ", "-", $_POST['naslov_clanka'])), '-');
-                            }
-                            $slug= preg_replace('/[^a-z0-9-]+/', '-', $slug);
-
-                            $objavljen = (!isset($_POST['objavljen']) ? 0 : 1 );
-                            $datum_objave_clanka = date("Y-m-d H:i:s");
-
-                            $clanak = new ClanakModel($konekcija);
-
-                            if (isset($_POST['clanak_id']) && !empty($_POST['clanak_id'])) {
-                                $clanak_id = $_POST['clanak_id'];
-
-                                if (file_exists($_FILES['naslovna_slika']['tmp_name']) && is_uploaded_file($_FILES['naslovna_slika']['tmp_name'])) {
-                                    $format_slike = array("jpeg","jpg","png");
-                                    $file_tmp     = $_FILES['naslovna_slika']['tmp_name'];
-                                    $naslovna_slika = $clanak_id . ".png";
-                                    $naziv_extenzija = explode('.',$_FILES['naslovna_slika']['name']);
-                                    $extenzija = strtolower($naziv_extenzija[1]);
-
-                                    if (in_array($extenzija, $format_slike) === false) {
-                                        $greske[] = "Format nije dozvoljen. Koristite formate JPEG, JPG ili PNG.";
-                                    }
-                                } else {
-                                    $rezultat = $clanak->prikaziClanakPoIdu($_POST['clanak_id']);
-                                    $naslovna_slika = $rezultat['naslovna_slika'];
-                                }
-                                if(count($greske) > 0) {
-                                    $rezultat = $clanak->prikaziClanakPoIdu($_POST['clanak_id']);
-                                    include BASE_PATH . '/view/dodajIzmijeniClanak.php';
-
-                                } else {
-                                    $rezultat = $clanak->IzmijeniClanak($clanak_id, $korisnik_id, $naslovna_slika, $naslov_clanka, $kratki_tekst, $dugacki_tekst, $kljucne_rijeci, $slug, $objavljen, $datum_objave_clanka); 
-
-                                    if ($rezultat) {
-                                        move_uploaded_file($file_tmp,BASE_PATH.'/view/assets/images/clanci/'.$naslovna_slika);
-                                        header("Location: ". BASE_URL . 'index.php?controller=clanak&operation=stranicaClanak');
-                                        die();
-                                    }
-                                }
-                            } else {
-                                if (file_exists($_FILES['naslovna_slika']['tmp_name']) && is_uploaded_file($_FILES['naslovna_slika']['tmp_name'])) {
-                                    $format_slike = array("jpeg","jpg","png");
-                                    $file_tmp       = $_FILES['naslovna_slika']['tmp_name'];
-
-                                    $naziv_extenzija = explode('.',$_FILES['naslovna_slika']['name']);
-                                    $extenzija = strtolower($naziv_extenzija[1]);
-
-                                    if (in_array($extenzija, $format_slike) === false) {
-                                        $greske[] = "Format nije dozvoljen. Koristite formate JPEG, JPG ili PNG.";
-                                    }
-                                }
-                                if(count($greske) > 0) {
-                                    include BASE_PATH . '/view/dodajIzmijeniClanak.php';
-                                } else {
-                                    $rezultat = $clanak->dodajClanak($korisnik_id, $naslovna_slika, $naslov_clanka, $kratki_tekst, $dugacki_tekst, $kljucne_rijeci, $slug, $objavljen, $datum_objave_clanka); 
-                                    if ($rezultat) {
-                                        if (file_exists($_FILES['naslovna_slika']['tmp_name']) && is_uploaded_file($_FILES['naslovna_slika']['tmp_name'])) {
-                                            global $konekcija;
-                                            $zadnji_unos = mysqli_insert_id($konekcija);
-                                            $naslovna_slika = $zadnji_unos . ".png";
-                                        }
-                                        $rezultat = $clanak->IzmijeniSliku($zadnji_unos, $naslovna_slika);
-                                        move_uploaded_file($file_tmp,BASE_PATH.'/view/assets/images/clanci/'.$naslovna_slika);
-                                        include BASE_PATH . '/view/clanak.php';
-                                    }
-                                }
-                            }
-                        }
+                        
                     } else {
+                        $rezultat = $clanak->prikaziClanakPoIdu($clanak_id);
+                        $naslovna_slika = $rezultat['naslovna_slika'];
+                    }
+                        
+                    if(count($greske) > 0) {
+                        $rezultat = $clanak->prikaziClanakPoIdu($clanak_id);
+                        $naslovna_slika = $rezultat['naslovna_slika'];
                         include BASE_PATH . '/view/dodajIzmijeniClanak.php';
-                    }     
+                    } else {
+
+                        if ($clanak_id) {
+                            $rezultat = $clanak->IzmijeniClanak($clanak_id, $korisnik_id, $naslovna_slika, $naslov_clanka, $kratki_tekst, $dugacki_tekst, $kljucne_rijeci, $slug, $objavljen, $datum_objave_clanka); 
+                            if ($rezultat) {
+                                move_uploaded_file($file_tmp,BASE_PATH.'/view/assets/images/clanci/'.$naslovna_slika);
+                                header("Location: ". BASE_URL . 'index.php?controller=clanak&operation=stranicaClanak');
+                                die();
+                            }
+                        } else {
+                            $rezultat = $clanak->dodajClanak($korisnik_id, $naslovna_slika, $naslov_clanka, $kratki_tekst, $dugacki_tekst, $kljucne_rijeci, $slug, $objavljen, $datum_objave_clanka); 
+                            if ($rezultat) {
+                                if (file_exists($_FILES['naslovna_slika']['tmp_name']) && is_uploaded_file($_FILES['naslovna_slika']['tmp_name'])) {
+                                    global $konekcija;
+                                    $zadnji_unos = mysqli_insert_id($konekcija);
+                                    $naslovna_slika = $zadnji_unos . ".png";
+                                }
+                                $rezultat = $clanak->IzmijeniSliku($zadnji_unos, $naslovna_slika);
+                                move_uploaded_file($file_tmp,BASE_PATH.'/view/assets/images/clanci/'.$naslovna_slika);
+                                include BASE_PATH . '/view/clanak.php';
+                            }
+                        }
+                    }
                 }
             } else {
                 include BASE_PATH . '/view/logovanje.php';
             }
-            
-            
-        }
-        
+        }    
+             
         /*
          * Prikazi Clanke Paginacija
          */
@@ -183,22 +156,27 @@
             $utisakKomentara = new utisakKomentaraModel($konekcija);
             
             if (isset($_GET['clanak_id'])) {
+                $clanak_id = $_GET['clanak_id'];
                 $rezultat = $clanak->prikaziClanakPoIdu($_GET['clanak_id']);
-                
-                if (isset($_SESSION['korisnik'][0]) && $_SESSION['korisnik'][0]  !== '') {
-                    $kojiUtisakPostoji = $utisakClanka->kojiUtisakPostoji($_SESSION['korisnik'][0], $_GET['clanak_id']);
-                } else {
-                    $kojiUtisakPostoji = $utisakClanka->kojiUtisakPostoji('', $_GET['clanak_id']);
-                }
-                if (isset($_SESSION['korisnik'][0]) && $_SESSION['korisnik'][0]  !== '') {
-                    $clanakSaKomentarima = $komentar->clanakSaKomentarima($_GET['clanak_id'], $_SESSION['korisnik'][0]);
-                } else {
-                    $procitajClanakSaKomentarima = $komentar->procitajClankakSaKomentarima($_GET['clanak_id']);
-                }
-                
-                $pozitivniUtisci = $utisakClanka->prebrojPozitivneUtiskeClanka($_GET['clanak_id']);
-                $negativniUtisci = $utisakClanka->prebrojNegativneUtiskeClanka($_GET['clanak_id']);
+            } else if (isset($_GET['url'])) {
+                $rezultat = $clanak->prikaziClanakPoSlug($_GET['url']);
+                $clanak_id = $rezultat['id'];
+            }   
+
+            if (isset($_SESSION['korisnik'][0]) && $_SESSION['korisnik'][0]  !== '') {
+                $kojiUtisakPostoji = $utisakClanka->kojiUtisakPostoji($_SESSION['korisnik'][0], $clanak_id);
+            } else {
+                $kojiUtisakPostoji = $utisakClanka->kojiUtisakPostoji('', $clanak_id);
             }
+            if (isset($_SESSION['korisnik'][0]) && $_SESSION['korisnik'][0]  !== '') {
+                $clanakSaKomentarima = $komentar->clanakSaKomentarima($clanak_id, $_SESSION['korisnik'][0]);
+            } else {
+                $procitajClanakSaKomentarima = $komentar->procitajClankakSaKomentarima($clanak_id);
+            }
+
+            $pozitivniUtisci = $utisakClanka->prebrojPozitivneUtiskeClanka($clanak_id);
+            $negativniUtisci = $utisakClanka->prebrojNegativneUtiskeClanka($clanak_id);
+            
             if (isset($_SESSION['korisnik'][0]) && $_SESSION['korisnik'][0]  !== '') {
                 include BASE_PATH . '/view/procitajKomentarisiClanak.php';
             } else {

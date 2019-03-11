@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html>
     <?php include('header.php'); ?>
     <?php include('topContainer.php'); ?>
@@ -49,7 +49,7 @@
                         <div class="ukupno_utisaka">
                             <div class="pozitivni">Pozitivni utisci: <?php echo '<span>' . $pozitivniUtisci . '</span>'; ?></div>
                             <div class="negativni">Pozitivni utisci: <?php echo '<span>' . $negativniUtisci . '</span>'; ?></div>
-                            <a href="index.php?controller=clanak&operation=pogledajSveClanke&korisnik_id=<?php echo $rezultat['korisnik_id']; ?>">Pogledaj sve clanke</a>
+                            <a href="<?php echo BASE_URL; ?>index.php?controller=clanak&operation=pogledajSveClanke&korisnik_id=<?php echo $rezultat['korisnik_id']; ?>">Pogledaj sve clanke</a>
                         </div>
                  
                     </div>
@@ -98,7 +98,7 @@
                         <label for="komentar clanka"><b>Komentar:</b></label><br/>
                         <textarea rows="4" cols="50" placeholder="Unesite komentar..." name="komentar"></textarea> <br/>
                         <br/>
-                        <input type="button" value="Komentarisi" onclick="komentarisiClanak(<?php echo $_GET['clanak_id']; ?>)" class="registerbtn">
+                        <input type="button" value="Komentarisi" onclick="komentarisiClanak(<?php echo $rezultat['id']; ?>)" class="registerbtn">
                     </div>
                 </form>
             </div>
@@ -155,10 +155,10 @@ $( document ).ready(function() {
 });
     
 function dodajIzmijeniUtisakClanak(utisak, clanak_id) {
-    
-    //utisak -> 1 pozitivan / 2 negativan / 0 neutralan
+
+        //utisak -> 1 pozitivan / 2 negativan / 0 neutralan
     $.ajax({
-        url: "<?php BASE_URL; ?>index.php?controller=utisciClanka&operation=upisiUtisakNaClanak",
+        url: "<?php echo BASE_URL; ?>index.php?controller=utisciClanka&operation=upisiUtisakNaClanak",
         type: 'POST',
         dataType: 'JSON',
         data: 'utisak=' + utisak +
@@ -183,7 +183,7 @@ function komentarisiClanak(clanak_id) {
     
     var komentar = $(".komentar_wrapper form.komentarisi_clanak textarea").val();    
     $.ajax({
-        url: "<?php BASE_URL; ?>index.php?controller=komentar&operation=komentarisiClanak",
+        url: "<?php echo BASE_URL; ?>index.php?controller=komentar&operation=komentarisiClanak",
         type: 'POST',
         dataType: 'JSON',
         data: 'komentar=' + komentar +
@@ -216,7 +216,7 @@ function dodajIzmijeniUtisakNaKomentar(utisak, komentar_id) {
     
     //utisak -> 1 pozitivan / 2 negativan / 0 neutralan
     $.ajax({
-        url: "<?php BASE_URL; ?>index.php?controller=utisciKomentara&operation=upisiUtisakNaKomentar",
+        url: "<?php echo BASE_URL; ?>index.php?controller=utisciKomentara&operation=upisiUtisakNaKomentar",
         type: 'POST',
         dataType: 'JSON',
         data: 'utisak=' + utisak +
