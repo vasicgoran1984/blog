@@ -28,7 +28,7 @@
                 $korisnik_id = $_SESSION['korisnik'][0];
 
                 if (isset($_GET['clanak_id'])) {
-                    $clanak       = new ClanakModel($konekcija);
+                    $clanak   = new ClanakModel($konekcija);
                     $rezultat = $clanak->prikaziClanakPoIdu($_GET['clanak_id']);
                     include BASE_PATH . '/view/dodajIzmijeniClanak.php';
                 } else if (!isset($_POST['novi_clanak'])) {
