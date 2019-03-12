@@ -90,7 +90,7 @@
             $upit = "FROM clanci
                      LEFT JOIN korisnici
                      ON clanci.korisnik_id = korisnici.id
-                     WHERE objavljen = 1";
+                     WHERE objavljen = 1 ORDER BY clanci.id DESC";
             
             if ($ime_prezime != '') {
                 $upit .= " AND ((CONCAT(korisnici.ime, ' ', korisnici.prezime) LIKE '%$ime_prezime%' 
