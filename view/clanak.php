@@ -18,14 +18,14 @@
     </body>
 </html>
 <script>
-    $(document).ready(function(){
-        $.ajax({
-            url: "<?php BASE_URL; ?>index.php?controller=clanak&operation=prikaziClankeUTabeli",
-            type: 'POST',
-            data: 'po_str=' + 10,
-            success: function(data) {
-                $('form .paginacija').html(data);
-            }
-        });
+$(document).ready(function(){
+    $.ajax({
+        url: "<?php echo BASE_URL; ?>index.php?controller=clanak&operation=prikaziClankeUTabeli",
+        type: 'POST',
+        data: 'po_str=' + 10,
+        success: function(data) {
+            $('form .paginacija').html(data);
+        }
     });
+});
 </script>

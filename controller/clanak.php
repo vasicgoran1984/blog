@@ -1,6 +1,8 @@
 <?php
     require_once 'model/clanakModel.php';
     require_once 'model/utisakClankaModel.php';
+    require_once 'model/utisakKomentaraModel.php';
+    require_once 'model/komentarModel.php';  
     require_once 'db_konekcija/db_konekcija.php';
     
     class Clanak {
@@ -110,10 +112,12 @@
                                     global $konekcija;
                                     $zadnji_unos = mysqli_insert_id($konekcija);
                                     $naslovna_slika = $zadnji_unos . ".png";
+                                    $rezultat = $clanak->IzmijeniSliku($zadnji_unos, $naslovna_slika);
+                                    move_uploaded_file($file_tmp,BASE_PATH.'/view/assets/images/clanci/'.$naslovna_slika);
+                                    
                                 }
-                                $rezultat = $clanak->IzmijeniSliku($zadnji_unos, $naslovna_slika);
-                                move_uploaded_file($file_tmp,BASE_PATH.'/view/assets/images/clanci/'.$naslovna_slika);
-                                include BASE_PATH . '/view/clanak.php';
+                                header("Location: ". BASE_URL . 'index.php?controller=clanak&operation=stranicaClanak');
+                                die();
                             }
                         }
                     }
@@ -147,22 +151,21 @@
          */
         public function procitajKomentarisiClanak() {
             global $konekcija;
-            include 'model/utisakKomentaraModel.php';
-            include 'model/komentarModel.php';  
+            
             
             $clanak          = new ClanakModel($konekcija);
             $utisakClanka    = new utisakClankaModel($konekcija);
             $komentar        = new KomentarModel($konekcija);
             $utisakKomentara = new utisakKomentaraModel($konekcija);
             
-            if (isset($_GET['clanak_id'])) {
-                $clanak_id = $_GET['clanak_id'];
-                $rezultat = $clanak->prikaziClanakPoIdu($_GET['clanak_id']);
-            } else if (isset($_GET['url'])) {
+            if (isset($_GET['url'])) {
                 $rezultat = $clanak->prikaziClanakPoSlug($_GET['url']);
                 $clanak_id = $rezultat['id'];
+                $korisnik_id = $rezultat['korisnik_id'];
             }   
-
+            
+            $prikaziAutora = $clanak->prikaziAutora($korisnik_id);
+            
             if (isset($_SESSION['korisnik'][0]) && $_SESSION['korisnik'][0]  !== '') {
                 $kojiUtisakPostoji = $utisakClanka->kojiUtisakPostoji($_SESSION['korisnik'][0], $clanak_id);
             } else {
@@ -224,10 +227,31 @@
             if (isset($_GET['korisnik_id'])) {
                 $korisnik_id = $_GET['korisnik_id'];
             }
-            
             $prikaziClanke = $clanak->prikaziClankePoKorisniku($korisnik_id);
-            
+            $prikaziAutora = $clanak->prikaziAutora($korisnik_id);
+
             include BASE_PATH . '/view/pregledClanakaPoKorisniku.php';
+        }
+        
+        /*
+         * Obrisi clanak
+         */
+        public function obrisiClanak() {
+            global $konekcija;
+   
+            if (isset($_SESSION['korisnik'])) {
+                   $clanak = new ClanakModel($konekcija);
+                     
+                if (isset($_POST['clanak_id'])) {
+                    $obrisi = $clanak->obrisiSvePoClankuId($_POST['clanak_id']);
+                    
+                    exit (json_encode(array(
+                        'status'  => true
+                    )));
+                }
+            } else {
+                include BASE_PATH . '/view/logovanje.php';
+            }
         }
     }
 

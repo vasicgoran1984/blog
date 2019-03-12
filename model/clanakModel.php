@@ -74,7 +74,7 @@
         /*
          * Prikazi sve objavljene clanke
          */
-        public function sviObjavljeniClanciPaginacija($po_strani, $stranica, $ime_prezime, $datum_od, $datum_do, $kljucna_rijec) {
+        public function sviObjavljeniClanciPaginacija($po_strani, $stranica, $ime_prezime, $datum_od, $datum_do, $naslov_kljucna_rijec) {
             global $konekcija;
             
             if ($stranica <= 1) {
@@ -104,14 +104,21 @@
             if ($datum_do != '') {
                 $upit .= " AND (datum_objave_clanka <= '$datum_do 23:59:59')";
             }
-            if ($kljucna_rijec != '') {
-                $upit .= " AND clanci.kljucne_rijeci LIKE '%$kljucna_rijec%'";
+            if ($naslov_kljucna_rijec != '') {
+                $upit .= " AND ((CONCAT(clanci.kljucne_rijeci, ' ', clanci.naslov_clanka) LIKE '%$naslov_kljucna_rijec%' 
+                           OR CONCAT(clanci.naslov_clanka, ' ', clanci.kljucne_rijeci) LIKE '%$naslov_kljucna_rijec%')
+                           OR clanci.naslov_clanka LIKE '%$naslov_kljucna_rijec%'
+                           OR clanci.kljucne_rijeci LIKE '%$naslov_kljucna_rijec%')";
             }
             
             $upit_brojac .= $upit;
-
-            $ukupno = $konekcija->query($upit_brojac);
-            $broj_red = $ukupno->fetch_row()[0];
+            
+            if ($ime_prezime == '' && $datum_od == '' && $datum_do == '' && $naslov_kljucna_rijec == '') {
+                $broj_red = $po_strani;
+            } else {
+                $ukupno = $konekcija->query($upit_brojac);
+                $broj_red = $ukupno->fetch_row()[0];
+            }
             
             $upit .= " LIMIT $start, $po_strani";
             
@@ -124,6 +131,7 @@
             $pret = $stranica - 1;
             $sled = $stranica + 1;
             $array['broj_str'] = $broj_str;
+            $array['broj_red'] = $broj_red;
             $array['pret'] = $pret;
             $array['sled'] = $sled;
             $array['sviClanci'] = $clanci;
@@ -199,7 +207,7 @@
          */
         public function prikaziClankePoKorisniku($korisnik_id) {
             global $konekcija;
-            $rezultat = $konekcija->query("SELECT ime, prezime, naslovna_slika, naslov_clanka,
+            $rezultat = $konekcija->query("SELECT korisnici.id as korisnik_id, naslovna_slika, naslov_clanka,
                                            kratki_tekst, dugacki_tekst, datum_objave_clanka
                                            FROM korisnici
                                            LEFT JOIN clanci
@@ -208,5 +216,34 @@
             
             for($clanci = array(); $red = $rezultat->fetch_assoc(); $clanci[] = $red);
             return $clanci;
+        }
+        
+        /*
+         * Prikazi autora 
+         */
+        public function prikaziAutora($korisnik_id) {
+            global $konekcija;
+            $rezultat = $konekcija->query("SELECT ime, prezime, slika_korisnika FROM korisnici WHERE id = $korisnik_id");
+            
+            return $rezultat->fetch_assoc();
+        }
+        
+        /*
+         * Obrisi clanak i povezane tabele
+         */
+        public function obrisiSvePoClankuId($clanak_id) {
+            global $konekcija;
+
+            $query ="DELETE CU, C, K, KU
+                     FROM clanci C
+                     LEFT JOIN clanci_utisak CU
+                     ON C.id = CU.clanak_id
+                     LEFT JOIN komentari K
+                     ON C.id = K.clanak_id
+                     LEFT JOIN komentari_utisak KU
+                     ON K.id = KU.komentar_id
+                     WHERE C.id = $clanak_id";
+            
+            return $konekcija->query($query);
         }
     }

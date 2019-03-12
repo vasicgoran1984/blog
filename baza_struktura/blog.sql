@@ -11,7 +11,7 @@ CREATE TABLE korisnici(
 CREATE TABLE clanci(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     korisnik_id INT(40),
-    FOREIGN KEY (korisnik_id) REFERENCES korisnici(id),
+    (korisnik_id) REFERENCES korisnici(id),
     naslovna_slika VARCHAR(7),
     naslov_clanka VARCHAR(50),
     kratki_tekst VARCHAR(50),
@@ -25,18 +25,18 @@ CREATE TABLE clanci(
 CREATE TABLE clanci_utisak(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     korisnik_id INT(40),
-    FOREIGN KEY (korisnik_id) REFERENCES korisnici(id),
+    (korisnik_id) REFERENCES korisnici(id),
     clanak_id INT(40),
-    FOREIGN KEY (clanak_id) REFERENCES clanci(id),
+    (clanak_id) REFERENCES clanci(id),
     utisak Tinyint (1)
 );
 
 CREATE TABLE komentari(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     korisnik_id INT(40),
-    FOREIGN KEY (korisnik_id) REFERENCES korisnici(id),
+    (korisnik_id) REFERENCES korisnici(id),
     clanak_id INT(40),
-    FOREIGN KEY (clanak_id) REFERENCES clanci(id),
+    (clanak_id) REFERENCES clanci(id),
     komentar text,
     datum_objave_komentara DATETIME
 );
@@ -44,9 +44,9 @@ CREATE TABLE komentari(
 CREATE TABLE komentari_utisak(
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     korisnik_id INT(40),
-    FOREIGN KEY (korisnik_id) REFERENCES korisnici(id),
+    (korisnik_id) REFERENCES korisnici(id),
     komentar_id INT(40),
-    FOREIGN KEY (komentar_id) REFERENCES komentari(id),
+    (komentar_id) REFERENCES komentari(id),
     utisak Tinyint (1)
 );
 

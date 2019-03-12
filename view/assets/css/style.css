@@ -349,7 +349,7 @@ form.registracija-korisnika .registracija-btn {
 /*CLANAK WRAPPER*/
 
 .clanak_container {
-    margin: 40px auto;
+    margin: 20px auto;
     width: 1280px;
     height: auto;
     float: left;
@@ -737,3 +737,50 @@ form.registracija-korisnika .registracija-btn {
     color: #fff;
 }
 
+.prikazi_autora {
+    margin: 20px auto;
+    float: left;
+    margin-left: 5px;
+    background: lightgray;
+    width: 170px;
+    height: 100px;
+}
+
+.prikazi_autora img {
+    float: left;
+    margin: 0 auto;
+    margin-left: 10px;
+    padding: 3px;
+    width: 293px;
+    max-width: 20%;
+    max-height:10%;
+    height: auto;
+}
+
+.prikazi_autora span {
+    margin-left: 10px;
+    margin-top: 10px;
+    float: left;
+    font-size: 12px;
+    color: #444;
+}
+
+.brisi_clanak {
+    width: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.promijeni_clanak {
+    width: 4px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.promijeni {
+    color: #2196F3;
+}
+
+.korpa {
+    color: #2196F3;
+}

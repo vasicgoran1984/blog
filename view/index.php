@@ -57,7 +57,7 @@ $(document).ready(function(){
         var ime_prezime = $(".blog-wrapper .blog-search form.pretraga input[name='ime_prezime']").val();
         var datum_od = $(".blog-wrapper .blog-search form.pretraga input[name='datum_od']").val();
         var datum_do = $(".blog-wrapper .blog-search form.pretraga input[name='datum_do']").val();
-        var kljucna_rijec = $(".blog-wrapper .blog-search form.pretraga input[name='kljucna_rijec']").val();
+        var naslov_kljucna_rijec = $(".blog-wrapper .blog-search form.pretraga input[name='kljucna_rijec']").val();
         
         $.ajax({
             url: "<?php BASE_URL; ?>index.php?controller=index&operation=sviClanciPaginacija",
@@ -65,7 +65,7 @@ $(document).ready(function(){
             data: 'ime_prezime=' + ime_prezime + 
             '&datum_od=' + datum_od + 
             '&datum_do=' + datum_do +
-            '&kljucna_rijec='  + kljucna_rijec +
+            '&naslov_kljucna_rijec='  + naslov_kljucna_rijec +
             '&po_strani=' + 8,
             success: function(data) {
                 $(".blog-wrapper .pretraga_clanka_paginacija").html(data);

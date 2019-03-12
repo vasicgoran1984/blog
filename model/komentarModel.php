@@ -46,4 +46,13 @@
             for($komentari = array(); $red = $rezultat->fetch_assoc(); $komentari[] = $red);
             return $komentari;
         }
+        
+        /*
+         * Obrisi komentar po Id-u clanka
+         */
+        public function obrisiKomentarPoIduClanka($clanak_id) {
+            global $konekcija;
+            $query = "DELETE FROM komentari WHERE clanak_id = $clanak_id";
+            return $konekcija->query($query);
+        }
     }

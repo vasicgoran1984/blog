@@ -3,6 +3,12 @@
     <?php include('header.php'); ?>
     <?php include('topContainer.php'); ?>
     <body>
+        <div class="prikazi_autora">
+            <span>Autor: <?php echo $prikaziAutora['ime'] . ' ' . $prikaziAutora['prezime'] ?></span><br/><br/>
+            <div class="autor_slika">
+                <img src="<?php echo BASE_URL.'/view/assets/images/korisnici/'. $prikaziAutora['slika_korisnika']; ?>"/>
+            </div>
+        </div>
         <div class="clanak_container">
             <div class="clanak_wrapper">
                 <div class="clanak_wrapper_left">
@@ -156,7 +162,7 @@ $( document ).ready(function() {
     
 function dodajIzmijeniUtisakClanak(utisak, clanak_id) {
 
-        //utisak -> 1 pozitivan / 2 negativan / 0 neutralan
+    //utisak -> 1 pozitivan / 2 negativan / 0 neutralan
     $.ajax({
         url: "<?php echo BASE_URL; ?>index.php?controller=utisciClanka&operation=upisiUtisakNaClanak",
         type: 'POST',

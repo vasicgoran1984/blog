@@ -3,6 +3,12 @@
     <?php include('header.php'); ?>
     <?php include('topContainer.php'); ?>
     <body>
+        <div class="prikazi_autora">
+            <span>Autor: <?php echo $prikaziAutora['ime'] . ' ' . $prikaziAutora['prezime'] ?></span><br/><br/>
+            <div class="autor_slika">
+                <img src="<?php echo BASE_URL.'/view/assets/images/korisnici/'. $prikaziAutora['slika_korisnika']; ?>"/>
+            </div>
+        </div>
         <?php if((isset($prikaziClanke))): ?>
         <?php foreach($prikaziClanke as $jedanClanak): ?>
         <div class="clanak_container">
