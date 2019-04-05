@@ -9,7 +9,7 @@ class Validation {
             $greske[] = "Ime je obavezno polje.";
         }
         
-        if(!empty($podaci_reg['ime']) && !preg_match("/^[a-zA-Z]{3,30}$/",str_replace(" ","",$podaci_reg['ime']))) {
+        if (!empty($podaci_reg['ime']) && !preg_match("/^[a-zA-Z]{3,30}$/",str_replace(" ","",$podaci_reg['ime']))) {
             $greske[] = 'Ime moze da ima samo slova. Unesite najmanje 3 do 30 karaktera.';
         }
         
@@ -17,7 +17,7 @@ class Validation {
             $greske[] = "Prezime je obavezno polje.";
         }
 
-        if(!empty($podaci_reg['prezime']) && !preg_match("/^[a-zA-Z]{3,30}$/",str_replace(" ","",$podaci_reg['prezime']))) {
+        if (!empty($podaci_reg['prezime']) && !preg_match("/^[a-zA-Z]{3,30}$/",str_replace(" ","",$podaci_reg['prezime']))) {
             $greske[] = 'Prezime moze da ima samo slova. Unesite najmanje 3 do 30 karaktera.';
         }
         
@@ -25,7 +25,7 @@ class Validation {
             $greske[] = "Korisnicko ime je obavezno polje.";
         }
         
-        if(!empty($podaci_reg['korisnicko_ime']) && !preg_match("/^[a-zA-Z0-9]{3,30}$/",str_replace(" ","",$podaci_reg['korisnicko_ime']))) {
+        if (!empty($podaci_reg['korisnicko_ime']) && !preg_match("/^[a-zA-Z0-9]{3,30}$/",str_replace(" ","",$podaci_reg['korisnicko_ime']))) {
             $greske[] = 'Korisnicko ime moze imati kombinaciju samo slova i brojeva. Unesite najmanje 3 do 30 karaktera.';
         }
         
@@ -93,7 +93,7 @@ class Validation {
             $greske[] = "Molimo da unesete naslov clanka.";
         }
         
-        if(!empty($podaci_clanka['naslov_clanka']) && !preg_match("/^[a-zA-Z0-9]{3,50}$/",str_replace(" ","",$podaci_clanka['naslov_clanka']))) {
+        if (!empty($podaci_clanka['naslov_clanka']) && !preg_match("/^[a-zA-Z0-9]{3,50}$/",str_replace(" ","",$podaci_clanka['naslov_clanka']))) {
             $greske[] = 'Naslov moze da ima kombinaciju slova i brojeva. Unesite najmanje 3 karaktera.';
         }
         
@@ -101,7 +101,7 @@ class Validation {
             $greske[] = "Molimo da unesete kratki tekst.";
         }
 
-        if(!empty($podaci_clanka['kratki_tekst']) && !preg_match("/^[a-zA-Z]{3,50}$/",str_replace(" ","",$podaci_clanka['kratki_tekst']))) {
+        if (!empty($podaci_clanka['kratki_tekst']) && !preg_match("/^[a-zA-Z]{3,50}$/",str_replace(" ","",$podaci_clanka['kratki_tekst']))) {
             $greske[] = 'Kratki tekst moze da ima samo slova. Unesite najmanje 3 karaktera.';
         }
         
@@ -109,7 +109,7 @@ class Validation {
             $greske[] = "Molimo da unesete opis clanka.";
         }
         
-        if(!empty($podaci_clanka['dugacki_tekst']) && !preg_match('/^.*(?=.{5,})(?=.*[a-z]).*$/',str_replace(" ","",$podaci_clanka['dugacki_tekst']))) {
+        if (!empty($podaci_clanka['dugacki_tekst']) && !preg_match('/^.*(?=.{5,})(?=.*[a-z]).*$/',str_replace(" ","",$podaci_clanka['dugacki_tekst']))) {
             $greske[] = 'Opis clanka moze da ima samo slova. Unesite najmanje 5 karaktera.';
         }
         
@@ -117,7 +117,7 @@ class Validation {
             $greske[] = "Molimo da unesete kljucne rijeci.";
         }
         
-        if(!empty($podaci_clanka['kljucne_rijeci']) && !preg_match("/^[a-zA-Z]{3,}$/",str_replace(" ","",$podaci_clanka['kljucne_rijeci']))) {
+        if (!empty($podaci_clanka['kljucne_rijeci']) && !preg_match("/^[a-zA-Z]{3,}$/",str_replace(" ","",$podaci_clanka['kljucne_rijeci']))) {
             $greske[] = 'Kljucne rijeci mogu imati samo slova. Unesite najmanje 3 karaktera.';
         }
         
@@ -135,7 +135,7 @@ class Validation {
             $greske[] = "Ime je obavezno polje.";
         }
         
-        if(!empty($podaci_profil['ime']) && !preg_match("/^[a-zA-Z]{3,30}$/",str_replace(" ","",$podaci_profil['ime']))) {
+        if (!empty($podaci_profil['ime']) && !preg_match("/^[a-zA-Z]{3,30}$/",str_replace(" ","",$podaci_profil['ime']))) {
             $greske[] = 'Ime moze da ima samo slova. Unesite najmanje 3 do 30 karaktera.';
         }
         
@@ -143,7 +143,7 @@ class Validation {
             $greske[] = "Prezime je obavezno polje.";
         }
 
-        if(!empty($podaci_profil['prezime']) && !preg_match("/^[a-zA-Z]{3,30}$/",str_replace(" ","",$podaci_profil['prezime']))) {
+        if (!empty($podaci_profil['prezime']) && !preg_match("/^[a-zA-Z]{3,30}$/",str_replace(" ","",$podaci_profil['prezime']))) {
             $greske[] = 'Prezime moze da ima samo slova. Unesite najmanje 3 do 30 karaktera.';
         }
         
