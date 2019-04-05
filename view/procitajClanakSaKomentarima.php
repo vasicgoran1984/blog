@@ -2,25 +2,31 @@
     <?php include('header.php'); ?>
     <?php include('topContainer.php'); ?>
     <body>
+        <div class="prikazi_autora">
+            <span>Autor: <?php echo $prikaziAutora->ime . ' ' . $prikaziAutora->prezime ?></span><br/><br/>
+            <div class="autor_slika">
+                <img src="<?php echo BASE_URL.'/view/assets/images/korisnici/'. $prikaziAutora->slika_korisnika; ?>"/>
+            </div>
+        </div>
         <div class="clanak_container">
             <div class="clanak_wrapper">
                 <div class="clanak_wrapper_left">
                     <div class="naslov_clanka">
-                    <h4><?php echo htmlspecialchars($rezultat['naslov_clanka']); ?></h4>
+                    <h4><?php echo htmlspecialchars($rezultat->naslov_clanka); ?></h4>
                     </div>
-                    <?php if($rezultat['naslovna_slika'] !== '') : ?>
+                    <?php if($rezultat->naslovna_slika !== '') : ?>
                     <div class="slika_clanka">
-                        <img src="<?php echo BASE_URL.'/view/assets/images/clanci/' . $rezultat['naslovna_slika'] ; ?>"/>
+                        <img src="<?php echo BASE_URL.'/view/assets/images/clanci/' . $rezultat->naslovna_slika ; ?>"/>
                     </div>
                     <?php endif; ?>
                     
                     <div class="kratki_tekst_datum">
                         <div class="kratki_tekst_clanka">
-                            <span><?php echo htmlspecialchars($rezultat['kratki_tekst']); ?></span>
+                            <span><?php echo htmlspecialchars($rezultat->kratki_tekst); ?></span>
                         </div>
                         <div class="datum_objave_clanka">
                             <span>Datum objave:</span>
-                            <span><?php echo htmlspecialchars($rezultat['datum_objave_clanka']); ?></span>
+                            <span><?php echo htmlspecialchars($rezultat->datum_objave_clanka); ?></span>
                         </div>
                         <div class="pozitivan_negativan_utisak">
                             <div class="ostavi_utisak">
@@ -30,11 +36,11 @@
                         <div class="ukupno_utisaka">
                             <div class="pozitivni">Pozitivni utisci: <?php echo '<span>' . $pozitivniUtisci . '</span>'; ?></div>
                             <div class="negativni">Pozitivni utisci: <?php echo '<span>' . $negativniUtisci . '</span>'; ?></div>
-                            <a href="index.php?controller=clanak&operation=pogledajSveClanke&korisnik_id=<?php echo $rezultat['korisnik_id']; ?>">Pogledaj sve clanke</a>
+                            <a href="<?php echo BASE_URL; ?>clanak/pogledaj-sve-clanke/id/<?php echo $rezultat->korisnik_id; ?>">Pogledaj sve clanke</a>
                         </div>
                     </div>
                     <div class="dugacki_tekst_clanka">
-                        <span><?php echo htmlspecialchars($rezultat['dugacki_tekst']); ?></span>
+                        <span><?php echo htmlspecialchars($rezultat->dugacki_tekst); ?></span>
                     </div>
                     
                 </div>
@@ -43,11 +49,11 @@
                 <?php if (isset($procitajClanakSaKomentarima)): ?>
                     <?php foreach($procitajClanakSaKomentarima as $key => $jedanClanak): ?>
                     <div class="komentari_clanka">
-                            <span class="kor_datum">Komentarisao <?php echo $jedanClanak['ime'] . ' ' . $jedanClanak['prezime'] . ' Datum ' . $jedanClanak['datum_objave_komentara'] . '<br/>';  ?></span><br/>
-                            <span class="komentari_clanka_span"><?php echo $jedanClanak['komentar']; ?></span>
+                            <span class="kor_datum">Komentarisao <?php echo $jedanClanak->ime . ' ' . $jedanClanak->prezime . ' Datum ' . $jedanClanak->datum_objave_komentara . '<br/>';  ?></span><br/>
+                            <span class="komentari_clanka_span"><?php echo $jedanClanak->komentar; ?></span>
                             
                             <div class="reakcije_na_komentar">
-                                <?php if((isset($_SESSION['korisnik'])) && (!($jedanClanak['korisnik_id'] == $_SESSION['korisnik'][0]))): ?>
+                                <?php if((isset($_SESSION['korisnik'])) && (!($jedanClanak->korisnik_id == $_SESSION['korisnik']['id']))): ?>
                                     <form class="utisak_na_komentar"  method="post"> 
 
                                         <div class="komentar-utisak-plus">
@@ -66,7 +72,7 @@
                                 <?php endif; ?>
                             </div>
                         </div>
-            </div>
+                    </div>
                     <?php endforeach; ?>
                     <div style="display: none;" class="novi_komentar_clanka"></div>
                 <?php endif; ?>
@@ -78,7 +84,7 @@
                         <label for="komentar clanka"><b>Komentar:</b></label><br/>
                         <textarea rows="4" cols="50" placeholder="Unesite komentar..." name="komentar"></textarea> <br/>
                         <br/>
-                        <input type="button" value="Komentarisi" onclick="komentarisiClanak()" class="registerbtn">
+                        <input type="button" value="Komentarisi" onclick="komentarisiClanak()">
                     </div>
                 </form>
             </div>
@@ -88,12 +94,12 @@
 <script>
 function komentarisiClanak() {
     $.ajax({
-        url: "<?php BASE_URL; ?>index.php?controller=komentar&operation=komentarisiClanak",
+        url: "<?php echo BASE_URL; ?>komentar/ajax-komentarisi-clanak",
         type: 'POST',
         dataType: 'JSON'
     }).done(function(data){
         if (data.login) {
-            location.href = data.url + "index.php?controller=login&operation=logovanje";
+            location.href = data.url + "login/logovanje";
         }
     });
 }

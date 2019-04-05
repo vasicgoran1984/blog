@@ -4,31 +4,31 @@
     <?php include('topContainer.php'); ?>
     <body>
         <div class="prikazi_autora">
-            <span>Autor: <?php echo $prikaziAutora['ime'] . ' ' . $prikaziAutora['prezime'] ?></span><br/><br/>
+            <span>Autor: <?php echo $prikaziAutora->ime . ' ' . $prikaziAutora->prezime ?></span><br/><br/>
             <div class="autor_slika">
-                <img src="<?php echo BASE_URL.'/view/assets/images/korisnici/'. $prikaziAutora['slika_korisnika']; ?>"/>
+                <img src="<?php echo BASE_URL.'/view/assets/images/korisnici/'. $prikaziAutora->slika_korisnika; ?>"/>
             </div>
         </div>
         <div class="clanak_container">
             <div class="clanak_wrapper">
                 <div class="clanak_wrapper_left">
                     <div class="naslov_clanka">
-                    <h4><?php echo htmlspecialchars($rezultat['naslov_clanka']); ?></h4>
+                    <h4><?php echo htmlspecialchars($rezultat->naslov_clanka); ?></h4>
                     </div>
                     
-                    <?php if($rezultat['naslovna_slika'] !== '') : ?>
+                    <?php if($rezultat->naslovna_slika !== '') : ?>
                     <div class="slika_clanka">
-                        <img src="<?php echo BASE_URL.'/view/assets/images/clanci/' . $rezultat['naslovna_slika'] ; ?>"/>
+                        <img src="<?php echo BASE_URL.'/view/assets/images/clanci/' . $rezultat->naslovna_slika ; ?>"/>
                     </div>
                     <?php endif; ?>
                     
                     <div class="kratki_tekst_datum">
                         <div class="kratki_tekst_clanka">
-                            <span><?php echo htmlspecialchars($rezultat['kratki_tekst']); ?></span>
+                            <span><?php echo htmlspecialchars($rezultat->kratki_tekst); ?></span>
                         </div>
                         <div class="datum_objave_clanka">
                             <span>Datum objave:</span>
-                            <span><?php echo htmlspecialchars($rezultat['datum_objave_clanka']); ?></span>
+                            <span><?php echo htmlspecialchars($rezultat->datum_objave_clanka); ?></span>
                         </div>
                         <div class="pozitivan_negativan_utisak">
                             <div class="ostavi_utisak">
@@ -37,16 +37,16 @@
                             <?php if((isset($_SESSION['korisnik']))): ?>
                             <form class="utisak_na_clanak"  method="POST">
                                 <div class="checkbox clanak-utisak-plus" style="">
-                                    <input type="checkbox" clanak_id="<?php echo $rezultat['id']; ?>" class="checkbox-plus-clanak-utisak">
+                                    <input type="checkbox" clanak_id="<?php echo $rezultat->id; ?>" class="checkbox-plus-clanak-utisak">
                                     <label class="css-label">
-                                        <span class="fa fa-plus" style="background:<?php echo (isset($kojiUtisakPostoji[0]['utisak']) && $kojiUtisakPostoji[0]['utisak'] == 1 ? "gray" : ""); ?>"></span>
+                                        <span class="fa fa-plus" style="background:<?php echo (isset($kojiUtisakPostoji[0]->utisak) && $kojiUtisakPostoji[0]->utisak == 1 ? "gray" : ""); ?>"></span>
                                     </label>
                                 </div>
 
                                 <div class="checkbox clanak-utisak-minus" style="">
-                                    <input type="checkbox" clanak_id="<?php echo $rezultat['id']; ?>" class="checkbox-minus-clanak-utisak">
+                                    <input type="checkbox" clanak_id="<?php echo $rezultat->id; ?>" class="checkbox-minus-clanak-utisak">
                                     <label class="css-label">
-                                        <span class="fa fa-minus" style="background:<?php echo (isset($kojiUtisakPostoji[0]['utisak']) && $kojiUtisakPostoji[0]['utisak'] == 2 ? "gray" : ""); ?>"></span>
+                                        <span class="fa fa-minus" style="background:<?php echo (isset($kojiUtisakPostoji[0]->utisak) && $kojiUtisakPostoji[0]->utisak == 2 ? "gray" : ""); ?>"></span>
                                     </label>
                                 </div>
                                 <?php endif; ?>
@@ -55,12 +55,12 @@
                         <div class="ukupno_utisaka">
                             <div class="pozitivni">Pozitivni utisci: <?php echo '<span>' . $pozitivniUtisci . '</span>'; ?></div>
                             <div class="negativni">Pozitivni utisci: <?php echo '<span>' . $negativniUtisci . '</span>'; ?></div>
-                            <a href="<?php echo BASE_URL; ?>index.php?controller=clanak&operation=pogledajSveClanke&korisnik_id=<?php echo $rezultat['korisnik_id']; ?>">Pogledaj sve clanke</a>
+                            <a href="<?php echo BASE_URL; ?>clanak/pogledaj-sve-clanke/id/<?php echo $rezultat->korisnik_id; ?>">Pogledaj sve clanke</a>
                         </div>
                  
                     </div>
                     <div class="dugacki_tekst_clanka">
-                        <span><?php echo htmlspecialchars($rezultat['dugacki_tekst']); ?></span>
+                        <span><?php echo htmlspecialchars($rezultat->dugacki_tekst); ?></span>
                     </div>
                     
                 </div>
@@ -69,23 +69,23 @@
                 <?php if (isset($clanakSaKomentarima)): ?>
                     <?php foreach($clanakSaKomentarima as $key => $jedanClanak): ?>
                         <div class="komentari_clanka">
-                            <span class="kor_datum">Komentarisao <?php echo $jedanClanak['ime'] . ' ' . $jedanClanak['prezime'] . ' Datum ' . $jedanClanak['datum_objave_komentara'] . '<br/>';  ?></span><br/>
-                            <span class="komentari_clanka_span"><?php echo $jedanClanak['komentar']; ?></span>
+                            <span class="kor_datum">Komentarisao <?php echo $jedanClanak->ime . ' ' . $jedanClanak->prezime . ' Datum ' . $jedanClanak->datum_objave_komentara . '<br/>';  ?></span><br/>
+                            <span class="komentari_clanka_span"><?php echo $jedanClanak->komentar; ?></span>
                             
                             <div class="reakcije_na_komentar">
-                                <?php if((isset($_SESSION['korisnik'])) && (!($jedanClanak['korisnik_id'] == $_SESSION['korisnik'][0]))): ?>
+                                <?php if((isset($_SESSION['korisnik'])) && (!($jedanClanak->korisnik_id == $_SESSION['korisnik']['id']))): ?>
                                     <form class="utisak_na_komentar"  method="post"> 
 
                                         <div class="komentar-utisak-plus">
-                                            <input type="checkbox" komentar_id="<?php echo $jedanClanak['komentar_id']; ?>" class="checkbox-plus-komentar-utisak">
+                                            <input type="checkbox" komentar_id="<?php echo $jedanClanak->komentar_id; ?>" class="checkbox-plus-komentar-utisak">
                                             <label class="css-label">
-                                                <span class="fa fa-plus" komentar_id="<?php echo $jedanClanak['komentar_id']; ?>" style="background:<?php echo (!empty($jedanClanak['utisak']) && $jedanClanak['utisak'] == 1  ? "gray" : ""); ?>"></span>
+                                                <span class="fa fa-plus" komentar_id="<?php echo $jedanClanak->komentar_id; ?>" style="background:<?php echo (!empty($jedanClanak->utisak) && $jedanClanak->utisak == 1  ? "gray" : ""); ?>"></span>
                                             </label>
                                         </div>
                                         <div class="komentar-utisak-minus">
-                                            <input type="checkbox" komentar_id="<?php echo $jedanClanak['komentar_id']; ?>" class="checkbox-minus-komentar-utisak">
+                                            <input type="checkbox" komentar_id="<?php echo $jedanClanak->komentar_id; ?>" class="checkbox-minus-komentar-utisak">
                                             <label class="css-label">
-                                                <span class="fa fa-minus" komentar_id="<?php echo $jedanClanak['komentar_id']; ?>" style="background:<?php echo (!empty($jedanClanak['utisak']) && $jedanClanak['utisak'] == 2  ? "gray" : ""); ?>"></span>
+                                                <span class="fa fa-minus" komentar_id="<?php echo $jedanClanak->komentar_id; ?>" style="background:<?php echo (!empty($jedanClanak->utisak) && $jedanClanak->utisak == 2  ? "gray" : ""); ?>"></span>
                                             </label>
                                         </div>  
                                     </form>
@@ -97,14 +97,14 @@
                     <div style="display: none;" class="novi_komentar_clanka"></div>
                 <?php endif; ?>
             <div class="komentar_wrapper">
-                <div class="komentari_greske"></div>
+                <div class="komentari_greske"><span class="prikazi_greske"></span></div>
                 <form class="komentarisi_clanak"  method="POST" > 
                     <div class="container">
                         
                         <label for="komentar clanka"><b>Komentar:</b></label><br/>
                         <textarea rows="4" cols="50" placeholder="Unesite komentar..." name="komentar"></textarea> <br/>
                         <br/>
-                        <input type="button" value="Komentarisi" onclick="komentarisiClanak(<?php echo $rezultat['id']; ?>)" class="registerbtn">
+                        <input type="button" value="Komentarisi" onclick="komentarisiClanak(<?php echo $rezultat->id; ?>)" class="registerbtn">
                     </div>
                 </form>
             </div>
@@ -164,7 +164,7 @@ function dodajIzmijeniUtisakClanak(utisak, clanak_id) {
 
     //utisak -> 1 pozitivan / 2 negativan / 0 neutralan
     $.ajax({
-        url: "<?php echo BASE_URL; ?>index.php?controller=utisciClanka&operation=upisiUtisakNaClanak",
+        url: "<?php echo BASE_URL; ?>utisci-clanka/ajax-upisi-utisak-clanka",
         type: 'POST',
         dataType: 'JSON',
         data: 'utisak=' + utisak +
@@ -189,17 +189,19 @@ function komentarisiClanak(clanak_id) {
     
     var komentar = $(".komentar_wrapper form.komentarisi_clanak textarea").val();    
     $.ajax({
-        url: "<?php echo BASE_URL; ?>index.php?controller=komentar&operation=komentarisiClanak",
+        url: "<?php echo BASE_URL; ?>komentar/ajax-komentarisi-clanak",
         type: 'POST',
         dataType: 'JSON',
         data: 'komentar=' + komentar +
               '&clanak_id=' + clanak_id
     }).done(function(data){
         if (data.error) {
-            $(".komentari_greske").html(data.greske);
+            $(".komentari_greske span.prikazi_greske").show();
+            $(".komentari_greske span.prikazi_greske").html(data.greske);
         } else if (data.status) {
-
+           
             if ($(".svi_komentari_container").find(".komentari_clanka").length == 0){
+                $(".komentari_greske span.prikazi_greske").show();
                 $('.svi_komentari_container').append("<div " + "class=komentari_clanka" + "></div>");
                 $('.komentari_clanka').append("Komentarisao " + ' ' + data.komentarisao + '<br>' + ' ' + data.komentar).insertBefore(".komentarisi_clanak"); 
                 $(".komentar_wrapper form.komentarisi_clanak textarea").val(''); 
@@ -211,9 +213,10 @@ function komentarisiClanak(clanak_id) {
                 novi_kom.show();
                 $(".komentari_clanka").last().after(novi_kom);
                 $(".komentar_wrapper form.komentarisi_clanak textarea").val(''); 
+                $(".komentari_greske span.prikazi_greske").hide();
             }
         } else if (data.login) {
-            location.href = data.url + "index.php?controller=login&operation=logovanje";
+            location.href = data.url + "index/pocetna";
         }
     });
 }
@@ -222,7 +225,7 @@ function dodajIzmijeniUtisakNaKomentar(utisak, komentar_id) {
     
     //utisak -> 1 pozitivan / 2 negativan / 0 neutralan
     $.ajax({
-        url: "<?php echo BASE_URL; ?>index.php?controller=utisciKomentara&operation=upisiUtisakNaKomentar",
+        url: "<?php echo BASE_URL; ?>utisci-komentara/ajax-upisi-utisak-komentara",
         type: 'POST',
         dataType: 'JSON',
         data: 'utisak=' + utisak +

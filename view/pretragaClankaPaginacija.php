@@ -17,7 +17,7 @@
         <?php if($sviObjavljeniClanci['broj_red'] > 8) : ?>
         <?php for($i = 1; $i <= $sviObjavljeniClanci['broj_str']; $i++) { ?>
             <?php if ($i == $sviObjavljeniClanci['strana']) { ?>
-                <a href="#" class="active"><?php echo "$i"; ?></a>
+                <a href="#" class="active isDisabled"><?php echo "$i"; ?></a>
                 <?php } else { echo "<a href='#' value='$i'> $i </a>" . ' ' ; } ?>
             <?php } ?>
         <?php endif; ?>        
@@ -30,36 +30,31 @@
         <?php endif; ?>
     </div>
 </div>
-
-<form class="pretraga_procitaj_komentarisi_clanak" action="<?php BASE_URL; ?>index.php?controller=komentar&operation=procitajKomentarisiClanak" method="post">
-    <input type="hidden" name="izmijeni_clanak" value="1">
-    <div class="nadjeni_clanci">
-        <?php if (isset($sviObjavljeniClanci)) : ?>
-            <?php foreach($sviObjavljeniClanci['sviClanci'] as $jedanClanak) : ?>	
-                <div class="blog-container">
-                    <?php if($jedanClanak['naslovna_slika'] !== '') : ?>
-                        <div class="blog-image">
-                            <img src="<?php echo BASE_URL.'/view/assets/images/clanci/'. $jedanClanak['naslovna_slika']; ?>"/>
-                        </div>
-           
-                    <?php endif; ?>
-                    <div class="blog-title">
-                        <h4><?php echo htmlspecialchars($jedanClanak['naslov_clanka']); ?></h4>
+<div class="nadjeni_clanci">
+    <?php if (isset($sviObjavljeniClanci)) : ?>
+        <?php foreach($sviObjavljeniClanci['sviClanci'] as $jedanClanak) : ?>	
+            <div class="blog-container">
+                <?php if($jedanClanak->naslovna_slika !== '') : ?>
+                    <div class="blog-image">
+                        <img src="<?php echo BASE_URL.'/view/assets/images/clanci/'. $jedanClanak->naslovna_slika; ?>"/>
                     </div>
-                    <div class="blog-text">
-                        <h4><?php echo htmlspecialchars(substr($jedanClanak['dugacki_tekst'], 0, 100)) . '...'; ?></h4>
-                    </div>
-                    <div class="blog-autor"><hr/>
-                        <h5>Autor: <?php echo htmlspecialchars($jedanClanak['ime'] . ' ' . $jedanClanak['prezime']); ?> </h5>
-                    </div>
-                    <div class="blog-link-komentar">
-                        <a href="clanak/<?php echo $jedanClanak['slug']; ?>">Procitaj Vise</a>
-                    </div>
+                <?php endif; ?>
+                <div class="blog-title">
+                    <h4><?php echo htmlspecialchars($jedanClanak->naslov_clanka); ?></h4>
                 </div>
-            <?php endforeach; ?>
-        <?php endif; ?>
-    </div>
-</form>
+                <div class="blog-text">
+                    <h4><?php echo htmlspecialchars(substr($jedanClanak->dugacki_tekst, 0, 100)) . '...'; ?></h4>
+                </div>
+                <div class="blog-autor"><hr/>
+                    <h5>Autor: <?php echo htmlspecialchars($jedanClanak->ime . ' ' . $jedanClanak->prezime); ?> </h5>
+                </div>
+                <div class="blog-link-komentar">
+                    <a href="clanak/procitaj-komentarisi/slug/<?php echo $jedanClanak->slug; ?>">Procitaj Vise</a>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</div>
 <?php endif; ?>
 <script>
 $(document).ready(function(){
@@ -70,13 +65,9 @@ $(document).ready(function(){
         var datum_do = $(".blog-wrapper .blog-search form.pretraga input[name='datum_do']").val();
         var naslov_kljucna_rijec = $(".blog-wrapper .blog-search form.pretraga input[name='kljucna_rijec']").val();
         
-        alert(ime_prezime + ' ' + datum_od + ' ' + datum_do + ' ' + kljucna_rijec);
-        
-        console.log(ime_prezime);
-        
         event.preventDefault();
         $.ajax({
-            url: "<?php BASE_URL; ?>index.php?controller=index&operation=sviClanciPaginacija",
+            url: "<?php echo BASE_URL; ?>index/ajax-index-pretraga",
             type: 'POST',
             data: 'po_strani=' + 8 + 
             '&stranica=' + stranica + 

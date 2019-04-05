@@ -1,57 +1,94 @@
 <?php
 
-    class ProfilModel {
-        
-        public function __construct(){}        
-        
-        /*
-         * Snimi sliku korisnika
-         */
-        public function snimiSlikuKorisnika($id_korisnika, $slika) {
-            global $konekcija;
-            $upit = "UPDATE korisnici SET slika_korisnika = '$slika' WHERE id = $id_korisnika";
-            return $konekcija->query($upit);
-        }
-        
-        /*
-         * Prikazi logovanog korisnika
-         */
-        public function prikaziKorisnika($id_korisnika) {
-            global $konekcija;
-            $upit = $konekcija->query("SELECT id, ime, prezime, korisnicko_ime, email, slika_korisnika FROM korisnici WHERE id = '".$id_korisnika."' ");
-            return $upit->fetch_row();
-        }
-        
-        /*
-         * Prikazi korisnika po ID-u
-         */
-        public function PrikaziKorisnikaPoIdu($id_korisnika) {
-            global $konekcija;
-            $upit = $konekcija->query("SELECT id, ime, prezime, korisnicko_ime, email, slika_korisnika FROM korisnici WHERE id = '".$id_korisnika."' ");
-            return $upit->fetch_assoc();
-        }
-        
-        /*
-         * Edit korisnika
-         */
-        public function EditKorisnika($id_korisnika, $ime, $prezime, $email) {
-            global $konekcija;
-            $upit = "UPDATE korisnici SET 
-                    ime      = '$ime',
-                    prezime  = '$prezime',
-                    email    = '$email'
-                    WHERE id = $id_korisnika";
-            return $konekcija->query($upit);
-        }
-        
-        /*
-         * Obrisi sliku korisnika
-         */
-        public function obrisiSliku($id_korisnika) {
-            global $konekcija;
-            $upit = "UPDATE korisnici SET 
-                     slika_korisnika = ''
-                     WHERE id = $id_korisnika";
-            return $konekcija->query($upit);
+class ProfilModel extends ORM {
+
+    protected $primaryKey = 'id';
+
+    public function __construct(){
+        parent::__construct();
+        $this->setTable("korisnici");
+    }
+
+    public function set($podaci) {
+        foreach($podaci as $key => $value) {
+            $this->$key = $value;
         }
     }
+
+    /*
+     * Snimi sliku korisnika
+     */
+    public function snimiSlikuKorisnika($id_korisnika, $slika) {
+        $table = new ORM();
+            $table->setTable('korisnici');
+            $id = $table->where('id', $id_korisnika)->update([
+                'slika_korisnika' => $slika,
+        ]);
+        return $id;
+    }
+
+    /*
+     * Prikazi korisnika po ID-u
+     */
+    public function PrikaziKorisnikaPoIdu($id_korisnika) {
+        $table = new ORM();
+        return $table->table('korisnici')->select('ime, prezime, korisnicko_ime, email, slika_korisnika')->where('id', $id_korisnika)->first();
+    }
+
+    /*
+     * Prikazi sliku korisnika po ID-u
+     */
+    public function prikaziSlikuLogovanogKorisnika($id_korisnika) {
+        $table = new ORM();
+        $rezultat = $table->table('korisnici')->select('slika_korisnika')->where('id', $id_korisnika)->first();
+        return $rezultat->slika_korisnika;
+    }
+
+    /*
+     * Edit korisnika
+     */
+    public function EditKorisnika($id_korisnika, $ime, $prezime, $email) {
+        $table = new ORM();
+            $table->setTable('korisnici');
+            $id = $table->where('id', $id_korisnika)->update([
+                'ime'     => $ime,
+                'prezime' => $prezime,
+                'email'   => $email
+        ]);
+        return $id;
+    }
+
+    /*
+     * Obrisi sliku korisnika
+     */
+    public function obrisiSlikuKorisnika($id_korisnika) {
+        $table = new ORM();
+        $table->setTable('korisnici');
+        $id = $table->where('id', $id_korisnika)->update([
+            'slika_korisnika' => NULL,
+        ]);
+        return $id;
+    }
+
+    /*
+     * Prikazi autora
+     */
+    public function prikaziAutora($korisnik_id) {
+        $table = new ORM();
+        return $table->table('korisnici')->select('ime, prezime, slika_korisnika')->where('id', $korisnik_id)->first();
+    }
+
+    /*
+     * Prikazi sve clanke po korisniku
+     */
+    public function prikaziClankePoKorisniku($korisnik_id) {
+        $upit = DB::query("SELECT korisnici.id as korisnik_id, naslovna_slika, naslov_clanka,
+                                   kratki_tekst, dugacki_tekst, datum_objave_clanka
+                                   FROM korisnici
+                                   LEFT JOIN clanci
+                                   ON clanci.korisnik_id = korisnici.id 
+                                   WHERE korisnici.id = $korisnik_id AND objavljen = 1");
+        
+        return $upit;
+    }
+}

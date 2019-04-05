@@ -10,7 +10,7 @@
       <?php }?>
     <?php for($i = 1; $i <= $sviClanci['broj_stranica']; $i++) { ?>
         <?php if ($i == $sviClanci['strana']) { ?>
-            <a href="#" class="active"><?php echo "$i"; ?></a>
+            <a href="#" class="active isDisabled"><?php echo "$i"; ?></a>
             <?php } else { echo "<a href='#' value='$i'> $i </a>" . ' ' ; } ?>
         <?php } ?>
     <?php if ($sviClanci['strana'] < $sviClanci['broj_stranica']) { ?>
@@ -26,20 +26,20 @@
     <table class="tabela_sa_clancima" border = 1>
         <th>Naslov Clanka</th>
         <th>Objavljen</th>
-            <?php if(isset($sviClanci)): ?>
-                <?php foreach($sviClanci['sviClanci'] as $jedanClanak) : ?>	
+            <?php if(isset($sviClanci['clanci'])): ?>
+                <?php foreach($sviClanci['clanci'] as $jedanClanak) : ?>	
                 <tr>
                     <td>
-                        <?php echo htmlspecialchars($jedanClanak['naslov_clanka']); ?>
+                        <?php echo htmlspecialchars($jedanClanak->naslov_clanka); ?>
                     </td>
                     <td>
-                        <?php echo (htmlspecialchars($jedanClanak['objavljen'] == 1) ? "Da" : 'Ne' ); ?>
+                        <?php echo (htmlspecialchars($jedanClanak->objavljen == 1) ? "Da" : 'Ne' ); ?>
                     </td>
                     <td class="promijeni_clanak">
-                        <a href="index.php?controller=clanak&operation=dodajIzmijeniClanak&clanak_id=<?php echo $jedanClanak['clanak_id']; ?>" class="fa fa-edit promijeni"></a>
+                        <a href="<?php echo BASE_URL; ?>clanci/dodaj-izmijeni-clanak/id/<?php echo $jedanClanak->clanak_id; ?>" class="fa fa-edit promijeni"></a>
                     </td>
                     <td class="brisi_clanak">
-                        <input type="button" value="Brisi" onclick="obrisiClanak(<?php echo $jedanClanak['clanak_id']; ?>)" class="fa fa-trash korpa">
+                        <input type="button" value="Brisi" onclick="obrisiClanak(<?php echo $jedanClanak->clanak_id; ?>)" class="fa fa-trash korpa">
                     </td>
                 </tr>
                 <?php endforeach; ?>
@@ -50,10 +50,9 @@
 $(document).ready(function(){
     $('.pagination_pages a').click(function(event) {
         var strana = $(this).attr('value');
-
         event.preventDefault();
         $.ajax({
-            url: "<?php echo BASE_URL; ?>index.php?controller=clanak&operation=prikaziClankeUTabeli",
+            url: "<?php echo BASE_URL; ?>clanci/ajax-prikazi-clanke",
             type: 'POST',
             data: 'strana=' + strana + '&po_str=' + 10,
             success: function(data) {
@@ -69,15 +68,14 @@ function obrisiClanak(clanak_id) {
     if (odgovor)
     {
         $.ajax({
-            url: "<?php echo BASE_URL; ?>index.php?controller=clanak&operation=obrisiClanak",
+            url: "<?php echo BASE_URL; ?>clanci/ajax-obrisi-clanak",
             type: 'POST',
             dataType: 'JSON',
             data: 'clanak_id=' + clanak_id
         }).done(function(data){
             if (data.status) {
-                
                 $.ajax({
-                    url: "<?php echo BASE_URL; ?>index.php?controller=clanak&operation=prikaziClankeUTabeli",
+                    url: "<?php echo BASE_URL; ?>clanci/ajax-prikazi-clanke",
                     type: 'POST',
                     data: 'po_str=' + 10,
                     success: function(data) {

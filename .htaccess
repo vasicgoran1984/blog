@@ -6,3 +6,8 @@ RewriteBase /blog/
 ErrorDocument 404 /blog/index.php?controller=index&operation=error
 
 RewriteRule ^clanak/([a-z0-9-]+)$ index.php?controller=clanak&operation=procitajKomentarisiClanak&url=$1 [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+RewriteRule ^(.+)$ index.php?uri=$1 [QSA,L] 

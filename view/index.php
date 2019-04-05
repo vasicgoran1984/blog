@@ -22,9 +22,9 @@
 $(document).ready(function(){
     
     // Prikazi sve clanke paginacija
-    $(document).ready(function(){
+    $(document).ready(function() {
         $.ajax({
-            url: "<?php BASE_URL; ?>index.php?controller=index&operation=sviClanciPaginacija",
+            url: "<?php echo BASE_URL; ?>index/pocetna",
             type: 'POST',
             data: 'po_strani=' + 8,
             success: function(data) {
@@ -60,7 +60,7 @@ $(document).ready(function(){
         var naslov_kljucna_rijec = $(".blog-wrapper .blog-search form.pretraga input[name='kljucna_rijec']").val();
         
         $.ajax({
-            url: "<?php BASE_URL; ?>index.php?controller=index&operation=sviClanciPaginacija",
+            url: "<?php echo BASE_URL; ?>index/ajax-index-pretraga",
             type: 'POST',
             data: 'ime_prezime=' + ime_prezime + 
             '&datum_od=' + datum_od + 
